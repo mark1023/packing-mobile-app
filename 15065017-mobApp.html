@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="homePage">
+  <div data-role="popup" id="createNewList">
+      <div data-role="header">
+        <h3>Create List</h3>
+      </div>
+      <div data-role="main" class="ui-content">
+        <label for="listNameBox" class=ui-hidden-accessible>List name</label>
+        <input type="text" name="listNameBox" id="listNameBox" placeholder="List Name" data-clear-btn="true">
+        <a class="ui-btn ui-btn-inline ui-corner-all ui-shadow" href="#addListItems" onclick="createNewList()">Create</a>
+      </div>
+  </div>
+  <div data-role="header">
+    <a style="font-size:12px" href="#createNewList" data-position-to="window" data-rel="popup" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-left">Create List</a>
+    <a style="font-size:12px" href="#addListItems" id="homeShowListBtn" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-icon-carat-r ui-btn-icon-right">Continue</a>
+    <h1>PackAid</h1>
+  </div>
+  <div data-role="main" class="ui-content">
+    <h2>Welcome!</h2>
+    <br/>
+    <h4>PackAid is the perfect holiday packing partner!</h4>
+    <p>Tailor-make your holiday list by choosing items from a long list of classic holiday essentials. Then keep track by deleting items from your list. Once you have finished packing, simply delete your list, ready to start a new one afresh.</p>
+    <h4>Begin by clicking the 'Create List' button in the top left-hand corner, or continue with a previous list by clicking 'Continue' in the top right-hand corner.</h4>
+  </div>
+</div>
+
+
+
+<div data-role="page" id="addListItems">
+  <div data-role="popup" id="quantity">
+        <div data-role="header">
+          <h1>Quantity<span style='color:red'>*</span></h1>
+        </div>
+        <div style="text-align:center" data-role="main" class="ui-content">
+          <div style="font-weight:bold; text-align:center" id="itemName"></div>
+          <div class="form-group" style="font-weight:bold" class="ui-field-contain">           
+            <input type="text" data-role="spinbox" name="spin" id="spin" value="1" min="0" max="100" />
+          </div>
+          <div style="text-align:center" data-role="controlgroup" data-type="horizontal">
+             <a data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-inline="true">Back</a>
+             <a href="#addListItems" id="addItemSave" class="ui-btn ui-corner-all ui-shadow ui-icon-star ui-btn-icon-right" data-inline="true" onclick="storeItems()">Save Item</a>
+          </div>
+         </div>
+   </div>
+   <div data-role="popup" id="clearListPopup2">
+    <div data-role="header">
+      <h1 style="color:red">Delete List?</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+      <p>Are You Sure You Want To Delete The Whole List?</p>
+      <div style="text-align: center" id="clearListBox" class="ui-grid-a">
+        <div class="ui-block-a">
+          <a onclick="clearStorage()" id="clearBoxYes" class="ui-btn ui-corner-all ui-shadow ui-icon-check">Yes</a>
+        </div>
+        <div class="ui-block-b">
+          <a href="#addListItems" id="clearBoxNo" class="ui-btn ui-corner-all ui-shadow ui-icon-delete">No</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-role="header" data-position="fixed">
+    <a class="ui-btn ui-corner-all ui-shadow ui-icon-bullets ui-btn-icon-left" onclick="showList()">Show List</a>
+    <h1>PackAid</h1>
+    <a href="#clearListPopup2" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">Delete List</a>
+   </div>
+  <div data-role="main" class="ui-content">
+    <div>
+    <h2 id="pickItemsHeading"></h2>
+    <form class="ui-filterable">
+      <input id="myFilter" data-type="search" placeholder="Search for an Existing Item" data-clear-btn="true">       
+    </form>
+    </div>
+    <div data-role="collapsible-set" data-filter="true" data-input="#myFilter">
+    <div data-role="collapsible">
+    <h2>Accessories</h2>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Belt-clothing.jpg/300px-Belt-clothing.jpg" id="Belt">Belt</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSRblaYQa5es5qxkBHUprN5KibwLJ4vPwWWR2t4mskpUKXHxfOOcg" id="ContactLenses">Contact Lenses</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://www.recyclenow.com/sites/files/recyclenow/styles/custom_main/public/images/main/Spectacles.jpg?itok=xupFx8CM" id="Glasses">Glasses</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcReIFzZPYLxlcmjn-hKplmCqDg5AU5E8sEP4KLWzdM-JQNjTKb1" id="Hat">Hat</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://media.tiffany.com/is/image/Tiffany/EcomBrowseM/return-to-tiffany-multi-heart-tag-necklace-37835331_968634_ED.jpg?op_usm=1.00,1.00,6.00&defaultImage=NoImageAvailable&&" id="Jewellery">Jewellery</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTHvfoG_zAQstTyGAF2asH84v6jKLd2CUujwLhHXfk7R6vahSWiTA" id="Sunglasses">Sunglasses</a></li>
+    </ul>
+    </div>
+    <div data-role="collapsible">
+    <h2>Clothing</h2> 
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://www.eden4lingerie.co.uk/ekmps/shops/edenshop/images/lingadore-aloha-bikini-set-watermelon-7661-p.jpg" id="Bikini">Bikini</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://s-media-cache-ak0.pinimg.com/736x/2a/9d/3c/2a9d3ccb20b90f4dab969d1a58d07d32.jpg" id="Blouse">Blouse</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT_NOD9QoPETP1ucuqaaRbiPBr3yrHX4HcHKxF4VQ3CNXNdiRrO" id="Coat">Coat</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://janenorman-co-uk.ewm.group/media/catalog/product/cache/1/small_image/300x450/9df78eab33525d08d6e5fb8d27136e95/2/0/20443_light_blue_1.jpg" id="Dress">Dress</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ2DYAGKPs5pOxXul45uNuOgN5RprwtghqPybhN5E4_zXQWmjsM" id="Hoodie">Hoodie</a></li>      
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://s-media-cache-ak0.pinimg.com/736x/a1/6c/e1/a16ce1f561477aad49a143d35c01fc47.jpg" id="Jacket">Jacket</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://www.monki.com/Content/ProductContent/0255083002/0255083002_2_0.jpg" id="Jeans">Jeans</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRlrxsri2L26kLP4VE-90irbcWwHmLyKrOpzMma7YvX65J9QJYabQ" id="Jumper">Jumper</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://image1.superdry.com/static/images/products/upload2125115174503104348.jpg" id="Shirt">Shirt</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQWBG3yIra8spEcYO3ZgCuvVFggb9-9BEXXXi_rw4RbKeBs1jBU" id="Shorts">Shorts</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRI2I9raFElwzA-FUAHkHdX5MHlMpcJu3xQRmQGIEGRF7AIaRU9" id="Skirt">Skirt</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVdfhwpIjelG9GGVW8aV7NWsVKRermabI_PjgUIUWXKvOVLn7QXA" id="Socks">Socks</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://s-media-cache-ak0.pinimg.com/736x/03/88/ba/0388ba1c6c049e12dc489b675663f19b.jpg" id="Suit">Suit</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://i.walmartimages.com/i/p/00/82/17/96/12/0082179612253_500X500.jpg" id="SwimmingShorts">Swimming Shorts</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSMx7pWBTV5qwyeWKYgCYWKdCbYFqqz1Xgv5j3m5FJn7bMpWFPX" id="SwimmingTrunks">Swimming Trunks</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR_erwnCUmE12GDlgsLga4EcWjRYnlzprhAJUMPXcd26skEobUL" id="Top">Top</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://uniqlo.scene7.com/is/image/UNIQLO/goods_67_146209?$pdp-medium$" id="T-Shirt">T-Shirt</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://sc01.alicdn.com/kf/UT8OreBXABaXXcUQpbXc/Bacterial-Quick-Dry-Breathable-Men-Sport-bamboo.png" id="Underwear">Underwear</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://cdn2.next.co.uk/Common/Items/Default/Default/ItemImages/Search/224x336/106078.jpg?X56" id="Vest">Vest</a></li>
+    </ul>
+    </div>
+    <div data-role="collapsible">
+    <h2>Electronics</h2>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://go-travelproducts.com/media/catalog/product/cache/2/image/930x1020/9df78eab33525d08d6e5fb8d27136e95/2/4/248_prod_a_col1_absolute_white.jpg" id="Adaptor">Adaptor</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://www.bhphotovideo.com/images/categoryImages/desktop/325x325/21008-Mirrorless-System-Cameras.jpg" id="Camera">Camera</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://currys.cdn.dixons.com/css/themes/ucms/category/headphones/img/noise.jpg" id="Headphones">Headphones</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://d3nevzfk7ii3be.cloudfront.net/igi/tcbxa1Eb6YMETIW2.large" id="Ipod">Ipod</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR4RW-ETO0QmqX4CgvgQl7JxMX36N3t_tqAM2nWZG-7mC2g45_q" id="Laptop">Laptop</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://thumbs1.ebaystatic.com/d/l225/m/mdQl3H4bIo1nGFJovHa3qlg.jpg" id="MobilePhoneCharger">Mobile Phone Charger</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://regmedia.co.uk/2008/06/16/sansa_fuze_2.jpg" id="MP3Player">MP3 Player</a></li>   
+    </ul>
+    </div>
+    <div data-role="collapsible">
+    <h2>Entertainment/Fun</h2>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://images.swimshop.co.uk/images/products/88707912_4pl.jpg" id="Armbands">Armbands</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://cdn.wallpapersafari.com/72/44/kVlQc7.jpg" id="BeachBall">Beach Ball</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSXGrsMx6n2c9w70_SkX3VrtLwYxuotzrmpTYJOvdzuVKuNv_2slA" id="Book">Book</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://www.shop.8ed.co.uk/images/dvd.jpg" id="Dvd">Dvd</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2016/12/07/104151701-GettyImages-143949731.530x298.jpg?v=1481108000" id="Games">Games</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://coachrickswimming.files.wordpress.com/2014/04/goggles-1.jpg" id="Goggles">Goggles</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSe65xbqnaFVcOJQdVDQNxdytzYsn4i0AB10UDBU8KN5agzFvYLg" id="Lilo">Lilo</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://www.clipartkid.com/images/150/playing-cards-UCtXNJ-clipart.png" id="PlayingCards">Playing Cards</a></li>
+    </ul>
+    </div>
+    <div data-role="collapsible">
+    <h2>Footwear</h2>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://s-media-cache-ak0.pinimg.com/originals/af/86/b6/af86b68d227327d4e241a086afb08dbb.jpg" id="Flats">Flats</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://cliparts.co/cliparts/dT4/5EK/dT45EK67c.jpg" id="FlipFlops">Flip Flops</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTOd7TZQi4BQKXNXrTDb05oloDvFyWbARms26EFnC7BF_YTUCBZ" id="Heels">Heels</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://d2ob0iztsaxy5v.cloudfront.net/product/170050/1700507060_zm.jpg" id="Sandals">Sandals</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5Q8OGhS5qJQcdDIlwH4l6dHjlY8BkvMK83VzOuvTTgsNiC0wb" id="Shoes">Shoes</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSF_3vuyEQki0pbTtNBuzOkMPYwfZkzQgwG8Iq-W3M8aslIHBu5" id="Trainers">Trainers</a></li>
+    </ul>
+    </div>  
+    <div data-role="collapsible">
+    <h2>Toiletries</h2>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://www.foolfashion.ch/5497/abercrombie-and-fitch-generic-fierce-cologne-for-dudes-50ml.jpg" id="Aftershave">Aftershave</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://ui3.assets-asda.com/g/v5/544/327/5054070544327_280_IDShot_3.jpeg" id="Aftersun">Aftersun</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSD3h70_cWWffU8F79VBVwooKmMgiyro45f44QDECKXRriSqgvM0Q" id="Deodorant">Deodorant</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://media.gq.com/photos/5583e30f09f0bee564429093/master/pass/copilot-style-groom-201403-1393950004176_hanz-de-fuko-grooming-hair-products-gq-magazine-march-2014.jpg" id="HairProducts">Hair Products</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://metrouk2.files.wordpress.com/2017/01/160540609.jpg?w=748&h=498&crop=1" id="Makeup">Makeup</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2014/1/22/1390404430117/Vintage-perfume-bottle-008.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=5431e2ec6d1bcdd4ab9448837673d55f" id="Perfume">Perfume</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://images.gawker.com/19dcvfetv4nxnpng/c_scale,fl_progressive,q_80,w_800.png" id="Razor">Razor</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://ghk.h-cdn.co/assets/cm/15/11/54ff2848a79a6-pantene-shampoo-s3.jpg" id="Shampoo">Shampoo</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://media.new.mensxp.com/media/content/2013/May/1369381253_73270.jpg" id="ShavingFoam">Shaving Foam</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://boots.scene7.com/is/image/Boots/10001742?id=-Klmv1&fmt=jpg&fit=constrain,1&wid=504&hei=548" id="Showergel">Showergel</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://www.wilko.com/content/ebiz/wilkinsonplus/invt/0242831/0242831_l.jpg" id="Suncream">Suncream</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://vignette2.wikia.nocookie.net/tlaststand/images/f/ff/Tooth_cleaning_device.jpg/revision/latest?cb=20150118051617" id="Toothbrush">Toothbrush</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="http://blog.sesamehub.com/walter-kim2/files/2015/11/which-toothpaste-is-best.jpg" id="Toothpaste">Toothpaste</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://sc01.alicdn.com/kf/HTB1FdAdJVXXXXXiXVXXq6xXFXXXE/Beach-Towel.jpg" id="Towel">Towel</a></li>
+    </ul>
+    </div>   
+    <div data-role="collapsible">
+    <h2>Travel Essentials</h2>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRr4IVtT4PCE6n1SzyDm3MkLW-uUeBoLL_TDWK5TLjvpkFm-Zhs" id="Currency">Currency</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://images-na.ssl-images-amazon.com/images/I/41BOrUlWmzL.jpg" id="FirstAidKit">First Aid Kit</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTs74xY90NmqpRT8ubrXAOQ_B9_ztJ7aUTT2x4L2wio-GUMFpU1" id="Medicine">Medicine</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://previews.123rf.com/images/mkos83/mkos831412/mkos83141200034/34458265-Background-made-of-english-pounds-banknotes-pile-of-money-Stock-Photo.jpg" id="Money">Money</a></li>
+      <li><a href="#quantity" data-position-to="window" data-rel="popup" onclick="goToQuantity(this)" class="ui-icon-plus"><img src="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/feature/image/50432/s630_passport.jpg" id="Passport">Passport</a></li>
+    </ul>
+    </div>              
+    </div>
+  </div>
+</div> 
+
+
+
+
+<div data-role="page" id="myList">
+  <div data-role="popup" id="deletePopup">
+   <div data-role="header">
+     <h1 style="color:red">Delete?</h1>
+   </div>
+   <div data-role="main" class="ui-content">
+     <p id="confirmItemDelete"></p>
+     <div style="text-align: center" id="deleteBox" class="ui-grid-a">
+       <div class="ui-block-a">
+         <a onclick="deleteItem()" id="deleteBoxYes" class="ui-btn ui-corner-all ui-shadow ui-icon-check">Yes</a>
+       </div>
+     <div class="ui-block-b">
+       <a href="#myList" id="deleteBoxNo" class="ui-btn ui-corner-all ui-shadow ui-icon-delete">No</a>
+     </div>
+    </div>   
+   </div>
+  </div>
+  <div data-role="popup" id="clearListPopup">
+    <div data-role="header">
+      <h1 style="color:red">Delete List?</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+      <p>Are You Sure You Want To Delete The Whole List?</p>
+      <div style="text-align: center" id="clearListBox" class="ui-grid-a">
+        <div class="ui-block-a">
+          <a onclick="clearStorage()" id="clearBoxYes" class="ui-btn ui-corner-all ui-shadow ui-icon-check">Yes</a>
+        </div>
+        <div class="ui-block-b">
+          <a href="#myList" id="clearBoxNo" class="ui-btn ui-corner-all ui-shadow ui-icon-delete">No</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-role="header">
+    <a href="#addListItems" class="ui-btn ui-corner-all ui-shadow ui-icon-arrow-l ui-btn-icon-left">Back</a>
+    <h1>PackAid</h1>
+    <a href="#clearListPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-icon-alert ui-btn-icon-left">Delete List</a>
+  </div>
+  <div data-role="main" class="ui-content">
+    <h2 id="listName"></h2>
+    <form class="ui-filterable">
+      <input id="aFilter" data-type="search" placeholder="Search for an List Item" data-clear-btn="true">       
+    </form>
+      <ul id="packingList" data-autodividers="true" data-sort="true" data-role="listview" data-filter="true" data-input="#aFilter" data-inset="true">
+      </ul>
+  </div>
+</div>
+
+
+<script>
+
+// builds the list on page load to prevent loss of data on refresh
+$(function() {
+	if(localStorage.length == 0)
+    {
+    	$("#homeShowListBtn").hide();
+    }
+    buildList();
+    $("#listName").text(localStorage.getItem("usersList"));
+	$("#pickItemsHeading").text("Select Holiday Items For: " + localStorage.getItem("usersList"));
+});
+
+
+// clears storage (deleting list) and returns to homePage to create a new list
+function clearStorage()
+{
+	localStorage.clear();
+	$.mobile.changePage("#homePage");
+	if(localStorage.length == 0)
+    {
+    	$("#homeShowListBtn").hide();
+    }
+}
+
+//variable to hold the selected itemData ('name x quantity') from goToDelete() function for later use in deleteItem() function
+var itemToDelete;
+
+//gets itemData of selected item ('name x quantity') and adds that value to a string which appears on confirming deletion of item
+function goToDelete(obj)
+{
+	itemToDelete = $(obj).text(); //grabs itemData as a parameter and assigns it to itemToDelete variable
+	$("#confirmItemDelete").text('Have You Packed: "' + itemToDelete + '"?'); //puts itemData text into 'confirm delete' message
+}
+
+
+//removes item from localStorage by looping through storage looking for value that matches 'itemToDelete' (which contains the name and quantity of the selected item)
+function deleteItem()
+{
+	for(var key in localStorage)
+	{
+		if(localStorage.getItem(key) == itemToDelete)
+		{
+			localStorage.removeItem(key);
+		}
+	}
+	showList(); //refreshes page, in essence
+}
+
+//takes the item name and the quantity and adds it to the localStorage with the item name as the KEY (means that if user adds wrong number of item, they can re-add item and automatically overwrites previous)
+function storeItems()
+{
+	name = $("#itemName").text();
+	quantity = $("#spin").val();
+	$("#spin").val(1);
+	itemData = name + " x " + quantity;
+	localStorage.setItem(name, itemData);
+}
+
+//gets name of item and puts into div of quantity popup (using this)
+function goToQuantity(obj)
+{
+	itemChosen = $(obj).text();
+	$("#itemName").text(itemChosen);
+}
+
+//clears local storage deleting old list entirely, saves list name entered puts value into subsequent page headings for personalisation
+function createNewList()
+{
+	localStorage.clear();
+	usersListName = $("#listNameBox").val();
+	localStorage.setItem("usersList", usersListName);
+	$("#listName").text(localStorage.getItem("usersList"));
+	$("#pickItemsHeading").text("Select Holiday Items For: " + localStorage.getItem("usersList"));
+}
+
+
+//dynamically builds users list using data held in local storage whilst redirecting user to the list itself
+function showList()
+{
+	$.mobile.changePage("#myList");
+	buildList();
+}
+
+//dynamically builds user's list from the sorted array 'sortedList' produced from the sortList() function
+function buildList()
+{
+	if(localStorage.length > 1)
+	{
+        $('#packingList').empty();
+        sortedList = sortList();
+	    for (var i = 0; i < sortedList.length; i++)
+	    {
+	    	if(sortedList[i] !== 'null' && sortedList[i] !== null)
+	  	    {
+	    		for(var key in localStorage)
+	    		{
+	    			if(localStorage.getItem(key) == sortedList[i])
+	    			{
+	    				var shortKey = key.replace(/\s+/g, '');
+	    				var imgAddress = document.getElementById(shortKey).src;
+	    			}
+	    		}
+                $("#packingList").append('<li><a onclick="goToDelete(this)" href="#deletePopup" data-position-to="window" data-rel="popup" class="ui-icon-delete"><img src="' + imgAddress + '">' + sortedList[i] + '</a></li>');
+	            $("#packingList").listview().listview('refresh');
+            }
+	    
+        }
+	}
+	else
+	{
+		$('#packingList').empty();
+		$("#packingList").append("<h4>You do not have any saved items - Please click 'Back' in the top left-hand corner to add some items</h4>");
+	}
+}
+
+
+//takes itemData from localStorage (values NOT keys) and sorts them alphabetically returning a sorted array.
+function sortList()
+{
+	var sortedList = [];
+	
+	for(var key in localStorage)
+	{
+		if(key !== 'usersList')
+		{
+			sortedList.push(localStorage.getItem(key));
+		}
+	}
+	sortedList.sort();
+	return sortedList;
+
+}
+    
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
